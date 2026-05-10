@@ -12,47 +12,16 @@ try {
 }
 
 // Quiz Data
+let quizzes = {};
 
-const quizzes = {
-  gk: [
-    {
-      question: "Capital of India?",
-      options: ["Mumbai", "Delhi", "Kolkata", "Chennai"],
-      correct: "Delhi"
-    },
-    {
-      question: "National animal of India?",
-      options: ["Lion", "Tiger", "Elephant", "Cow"],
-      correct: "Tiger"
-    }
-  ],
+fetch("https://script.google.com/macros/s/AKfycbwgny0cx2klDxxkzKZWmAI61HTGOjgeOX5TNr7Vrqhumkofbukbc48d-2Emdus9E4UisQ/exec")
+  .then(res => res.json())
+  .then(data => {
+    quizzes = data;
+    console.log("Loaded from sheet:", quizzes);
+  });
 
-  science: [
-    {
-      question: "H2O is?",
-      options: ["Oxygen", "Hydrogen", "Water", "Salt"],
-      correct: "Water"
-    },
-    {
-      question: "Sun is a?",
-      options: ["Planet", "Star", "Moon", "Asteroid"],
-      correct: "Star"
-    }
-  ],
 
-  history: [
-    {
-      question: "Who was first PM of India?",
-      options: ["Gandhi", "Nehru", "Patel", "Modi"],
-      correct: "Nehru"
-    },
-    {
-      question: "Who was first president of India?",
-      options: ["Gandhi", "Nehru", "Patel", "Modi"],
-      correct: "Patel"
-    }
-  ]
-};
 
 
 
@@ -62,21 +31,23 @@ let selected = null;
 let timer;
 let timeLeft = 10;
 
+let startSound = new Audio("assets/sounds/start.mp3");
+let sadSound = new Audio("assets/sounds/sad.mp3");
+let wowSound = new Audio("assets/sounds/wow.mp3");
+
+// optional: slightly lower volume
+startSound.volume = 0.2;
+sadSound.volume = 0.7;
+wowSound.volume = 0.8;
 // Start Quiz
 
 
 function startQuiz(category = "gk") {
   hideAll();
 
-  // Set selected category
   quizData = quizzes[category] || [];
+  if (quizData.length === 0) return;
 
-  if (quizData.length === 0) {
-    alert("No questions available!");
-    return;
-  }
-
-  // Reset everything properly
   currentQuestion = 0;
   score = 0;
   selected = null;
@@ -84,8 +55,13 @@ function startQuiz(category = "gk") {
   totalTime = 0;
   clearInterval(timer);
 
-  document.getElementById("quiz").style.display = "block";
+  // 🔊 play start sound (safe)
+  try {
+    startSound.currentTime = 0;
+    startSound.play();
+  } catch (e) {}
 
+  document.getElementById("quiz").style.display = "block";
   loadQuestion();
 }
 
@@ -254,7 +230,22 @@ function showResult() {
       origin: { y: 0.6 }
     });
   }
+  // 🔊 result sound logic
+  if (score === total) {
+    // all correct → wow
+    try {
+      wowSound.currentTime = 0;
+      wowSound.play();
+    } catch (e) {}
+  } else {
+    // any wrong → sad
+    try {
+      sadSound.currentTime = 0;
+      sadSound.play();
+    } catch (e) {}
+  }
 }
+
 
 
 
@@ -340,15 +331,18 @@ window.onload = function () {
 
 
 // Navigation
-document.getElementById("homeBtn").onclick = () => {
+document.getElementById("homeBtn").onclick = (e) => {
+  e.preventDefault();
   showHome();
 };
 
-document.getElementById("quizBtn").onclick = () => {
+document.getElementById("quizBtn").onclick = (e) => {
+  e.preventDefault();
   startQuiz("gk");
 };
 
-document.getElementById("catBtn").onclick = () => {
+document.getElementById("catBtn").onclick = (e) => {
+  e.preventDefault();
   showCategories();
 };
 
@@ -376,6 +370,21 @@ function hideAll() {
   if (result) result.style.display = "none";
   if (leaderboard) leaderboard.style.display = "none";
 }
+
+const navLinks = document.querySelectorAll(".navbar nav a");
+
+navLinks.forEach(link => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // remove active from all
+    navLinks.forEach(l => l.classList.remove("active"));
+
+    // add active to clicked one
+    this.classList.add("active");
+  });
+});
+
 
 
 
