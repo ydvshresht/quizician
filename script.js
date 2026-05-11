@@ -1,7 +1,8 @@
 let userAnswers = [];
 let totalTime = 0;
 let quizData = [];
-// 🔊 Safe sound loading (won’t crash if file missing)
+
+// 🔊 Safe sound loading
 let correctSound, wrongSound;
 
 try {
@@ -21,10 +22,6 @@ fetch("https://script.google.com/macros/s/AKfycbwgny0cx2klDxxkzKZWmAI61HTGOjgeOX
     console.log("Loaded from sheet:", quizzes);
   });
 
-
-
-
-
 let currentQuestion = 0;
 let score = 0;
 let selected = null;
@@ -32,20 +29,17 @@ let timer;
 let timeLeft = 10;
 
 let startSound = new Audio("assets/sounds/start.mp3");
-
 let wowSound = new Audio("assets/sounds/wow.mp3");
 
-// optional: slightly lower volume
 startSound.volume = 0.2;
-
 wowSound.volume = 0.8;
+
 // Start Quiz
-
-
 function startQuiz(CATEGORY = "GK") {
   hideAll();
 
   quizData = quizzes[CATEGORY] || [];
+
   if (quizData.length === 0) return;
 
   currentQuestion = 0;
@@ -53,25 +47,23 @@ function startQuiz(CATEGORY = "GK") {
   selected = null;
   userAnswers = [];
   totalTime = 0;
+
   clearInterval(timer);
 
-  // 🔊 play start sound (safe)
   try {
     startSound.currentTime = 0;
     startSound.play();
   } catch (e) {}
 
   document.getElementById("quiz").style.display = "block";
+
   loadQuestion();
 }
 
-
-
-
 // Load Question
-
 function loadQuestion() {
   const container = document.querySelector(".quiz-card");
+
   if (container) container.style.opacity = 0;
 
   setTimeout(() => {
@@ -80,31 +72,34 @@ function loadQuestion() {
 
     const q = quizData[currentQuestion];
 
-    // ✅ Better progress calculation
-    const progressPercent = ((currentQuestion + 1) / quizData.length) * 100;
-    document.getElementById("progressFill").style.width = progressPercent + "%";
+    const progressPercent =
+      ((currentQuestion + 1) / quizData.length) * 100;
 
-    // Question + progress text
-    document.getElementById("question").innerText = q.question;
+    document.getElementById("progressFill").style.width =
+      progressPercent + "%";
+
+    document.getElementById("question").innerText =
+      q.question;
+
     document.getElementById("progress").innerText =
       `Question ${currentQuestion + 1}/${quizData.length}`;
 
     const answersDiv = document.getElementById("answers");
+
     answersDiv.innerHTML = "";
 
     const letters = ["A", "B", "C", "D"];
 
-    q.options.forEach((OPTION, index) => {
+    q.options.forEach((option, index) => {
       const btn = document.createElement("button");
 
-      // ✅ Styled answer (like UI)
       btn.innerHTML = `
         <span class="option-letter">${letters[index]}</span>
-        ${OPTION}
+        ${option}
       `;
 
       btn.onclick = () => {
-        selected = OPTION;
+        selected = option;
 
         document.querySelectorAll(".answers button").forEach(b => {
           b.classList.remove("selected");
@@ -122,10 +117,7 @@ function loadQuestion() {
   }, 200);
 }
 
-
-
 // Timer
-
 function startTimer() {
   clearInterval(timer);
 
@@ -133,7 +125,8 @@ function startTimer() {
     timeLeft--;
     totalTime++;
 
-    document.getElementById("timer").innerText = "⏱ " + timeLeft;
+    document.getElementById("timer").innerText =
+      "⏱ " + timeLeft;
 
     if (timeLeft <= 0) {
       nextQuestion();
@@ -141,24 +134,23 @@ function startTimer() {
   }, 1000);
 }
 
-
-
 // Next Question
-
-
 function nextQuestion() {
   clearInterval(timer);
 
-  const correctAns = quizData[currentQuestion].CORRECT;
+  const currentQ = quizData[currentQuestion];
+
+  const correctAns = currentQ.correct;
 
   userAnswers.push({
-    question: quizData[currentQuestion].QUESTION,
+    question: currentQ.question,
     selected: selected || "Not Answered",
-    CORRECT: correctAns
+    correct: correctAns
   });
 
   if (selected === correctAns) {
     score++;
+
     if (correctSound) {
       correctSound.currentTime = 0;
       correctSound.play();
@@ -179,33 +171,36 @@ function nextQuestion() {
   }
 }
 
-
-
-
-
 // Result
-
-
-
 function showResult() {
   hideAll();
+
   document.getElementById("result").style.display = "flex";
 
   const total = quizData.length;
+
   const accuracy = Math.round((score / total) * 100);
 
-  document.getElementById("score").innerText = `${score} / ${total}`;
-  document.getElementById("accuracy").innerText = accuracy + "%";
-  document.getElementById("timeTaken").innerText = totalTime + " sec";
+  document.getElementById("score").innerText =
+    `${score} / ${total}`;
+
+  document.getElementById("accuracy").innerText =
+    accuracy + "%";
+
+  document.getElementById("timeTaken").innerText =
+    totalTime + " sec";
 
   const reviewDiv = document.getElementById("review");
+
   reviewDiv.innerHTML = "";
 
   userAnswers.forEach((item, index) => {
     const isCorrect = item.selected === item.correct;
 
     const div = document.createElement("div");
-    div.className = "review-card " + (isCorrect ? "correct" : "wrong");
+
+    div.className =
+      "review-card " + (isCorrect ? "correct" : "wrong");
 
     div.innerHTML = `
       <div class="review-icon">
@@ -222,7 +217,7 @@ function showResult() {
     reviewDiv.appendChild(div);
   });
 
-  // 🎉 Confetti (if good score)
+  // 🎉 Confetti
   if (typeof confetti !== "undefined" && score >= total / 2) {
     confetti({
       particleCount: 120,
@@ -230,35 +225,34 @@ function showResult() {
       origin: { y: 0.6 }
     });
   }
-  // 🔊 result sound logic
- if (score === total) {
-  // all correct → wow
-  try {
-    wowSound.currentTime = 0;
-    wowSound.play();
-  } catch (e) {}
+
+  // 🔊 Wow sound only for full score
+  if (score === total) {
+    try {
+      wowSound.currentTime = 0;
+      wowSound.play();
+    } catch (e) {}
+  }
 }
-}
-
-
-
-
-
-
-
 
 // Save Score
 function saveScore() {
-  const name = document.getElementById("username").value || "Guest";
+  const name =
+    document.getElementById("username").value || "Guest";
 
-  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  let leaderboard =
+    JSON.parse(localStorage.getItem("leaderboard")) || [];
 
   leaderboard.push({ name, score });
 
   leaderboard.sort((a, b) => b.score - a.score);
+
   leaderboard = leaderboard.slice(0, 5);
 
-  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+  localStorage.setItem(
+    "leaderboard",
+    JSON.stringify(leaderboard)
+  );
 
   showLeaderboard();
 }
@@ -266,15 +260,21 @@ function saveScore() {
 // Show Leaderboard
 function showLeaderboard() {
   document.getElementById("result").style.display = "none";
-  document.getElementById("leaderboard").style.display = "block";
 
-  const list = document.getElementById("leaderboardList");
+  document.getElementById("leaderboard").style.display =
+    "block";
+
+  const list =
+    document.getElementById("leaderboardList");
+
   list.innerHTML = "";
 
-  const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  const leaderboard =
+    JSON.parse(localStorage.getItem("leaderboard")) || [];
 
   leaderboard.forEach((user, index) => {
     const div = document.createElement("div");
+
     div.classList.add("leaderboard-item");
 
     if (index === 0) div.classList.add("rank-1");
@@ -292,37 +292,34 @@ function showLeaderboard() {
 }
 
 // Restart Quiz
-
 function restartQuiz() {
-  // Reset quiz state
   currentQuestion = 0;
   score = 0;
   selected = null;
+
   clearInterval(timer);
 
-  // 🔥 Reset new tracking data
   userAnswers = [];
   totalTime = 0;
 
-  // Hide all sections
   document.getElementById("quiz").style.display = "none";
   document.getElementById("result").style.display = "none";
-document.getElementById("review").innerHTML = "";
 
-  // Show home again
+  document.getElementById("review").innerHTML = "";
+
   document.querySelector(".hero").style.display = "block";
-  document.querySelector(".categories").style.display = "block";
+  document.querySelector(".categories").style.display =
+    "block";
 }
 
-
-// ✅ FIX: Ensure button works after page loads
+// Next Button
 window.onload = function () {
   const nextBtn = document.getElementById("nextBtn");
+
   if (nextBtn) {
     nextBtn.addEventListener("click", nextQuestion);
   }
 };
-
 
 // Navigation
 document.getElementById("homeBtn").onclick = (e) => {
@@ -342,13 +339,18 @@ document.getElementById("catBtn").onclick = (e) => {
 
 function showHome() {
   hideAll();
+
   document.querySelector(".hero").style.display = "block";
-  document.querySelector(".categories").style.display = "block";
+
+  document.querySelector(".categories").style.display =
+    "block";
 }
 
 function showCategories() {
   hideAll();
-  document.querySelector(".categories").style.display = "block";
+
+  document.querySelector(".categories").style.display =
+    "block";
 }
 
 function hideAll() {
@@ -356,7 +358,8 @@ function hideAll() {
   const categories = document.querySelector(".categories");
   const quiz = document.getElementById("quiz");
   const result = document.getElementById("result");
-  const leaderboard = document.getElementById("leaderboard");
+  const leaderboard =
+    document.getElementById("leaderboard");
 
   if (hero) hero.style.display = "none";
   if (categories) categories.style.display = "none";
@@ -365,20 +368,17 @@ function hideAll() {
   if (leaderboard) leaderboard.style.display = "none";
 }
 
-const navLinks = document.querySelectorAll(".navbar nav a");
+const navLinks =
+  document.querySelectorAll(".navbar nav a");
 
 navLinks.forEach(link => {
   link.addEventListener("click", function (e) {
     e.preventDefault();
 
-    // remove active from all
-    navLinks.forEach(l => l.classList.remove("active"));
+    navLinks.forEach(l =>
+      l.classList.remove("active")
+    );
 
-    // add active to clicked one
     this.classList.add("active");
   });
 });
-
-
-
-

@@ -1,195 +1,100 @@
-
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quizician</title>
-<link rel="icon" type="image/x-icon" href="favicon.ico.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>Quizician</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" />
 
+  <!-- Icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Inter&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
+  <!-- =========================
+       NAVBAR
+  ========================== -->
 
+  <header class="navbar">
 
-<!-- NAVBAR -->
-
-<header class="navbar">
-  <div class="logo">Quizician</div>
-
-  <nav>
-    <a href="#" id="homeBtn" class="active">Home</a>
-    <a href="#" id="quizBtn">Quizzes</a>
-    <a href="#" id="catBtn">Categories</a>
-  </nav>
-</header>
-
-
-<!-- HERO -->
-<section class="hero">
-
-  <div class="bg-shape left"></div>
-  <div class="bg-shape right"></div>
-
-  <div class="hero-content">
-
-    <div class="input-box">
-    <span class="icon"><i class="fa-solid fa-user"></i></span>
-      <input id="username" placeholder="Enter your name" />
+    <div class="logo">
+      <i class="fa-solid fa-brain"></i>
+      Quizician
     </div>
 
-    <h1>
-      Play <span>Smart.</span><br>
-      Think <span>Sharp.</span>
-    </h1>
+    <nav>
+      <a href="#" id="homeBtn" class="active">Home</a>
+      <a href="#" id="quizBtn">Quiz</a>
+      <a href="#" id="catBtn">Categories</a>
+    </nav>
 
-    <p>
-      Challenge yourself with exciting quizzes
-      and boost your knowledge.
-    </p>
-
-    <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
-
-  </div>
-
-</section>
-
-<!-- CATEGORIES -->
-<section class="categories">
-
-  <div class="cat-title">
-    <span></span>
-    <h2>Categories</h2>
-    <span></span>
-  </div>
-
-  <div class="sparkle">✦</div>
-
-  <div class="card-grid">
-
-    
-<div class="card" onclick="startQuiz('GK')">
-  <div class="circle"><i class="fa-solid fa-book"></i></div>
-  GK
-</div>
-
-<div class="card" onclick="startQuiz('ENGLISH')">
-  <div class="circle"><i class="fa-solid fa-flask"></i></div>
-  ENGLISH
-</div>
-
-<div class="card" onclick="startQuiz('MATH')">
-  <div class="circle"><i class="fa-solid fa-landmark"></i></div>
-  MATH
-</div>
-
-<div class="card" onclick="startQuiz('REASONING')">
-  <div class="circle"><i class="fa-solid fa-newspaper"></i></div>
-  REASONING
-</div>
+  </header>
 
 
 
-  </div>
-
-</section>
 
 
+  <!-- =========================
+       HERO SECTION
+  ========================== -->
 
-<section id="quiz" class="quiz-page" style="display:none;">
+  <section class="hero">
 
-  <div class="quiz-card">
+    <div class="bg-shape left"></div>
+    <div class="bg-shape right"></div>
 
-    <!-- Top Bar -->
-    <div class="quiz-top">
-      <div class="progress-text">
-        <i class="fa-solid fa-clipboard"></i>
-        <span id="progress"></span>
+    <div class="hero-content">
+
+      <div class="tag">
+        <i class="fa-solid fa-bolt"></i>
+        Smart Quiz Platform
       </div>
 
-      <div class="timer-box">
-        <i class="fa-solid fa-clock"></i>
-        <span id="timer"></span>
-      </div>
-    </div>
+      <div class="input-box">
 
-    <!-- Progress Bar -->
-    <div class="progress-bar">
-      <div id="progressFill"></div>
-    </div>
+        <span class="icon">
+          <i class="fa-solid fa-user"></i>
+        </span>
 
-    <!-- Question -->
-    <div class="question-box">
-      <div class="question-icon">🏛️</div>
-      <h2 id="question"></h2>
-    </div>
+        <input
+          type="text"
+          id="username"
+          placeholder="Enter your name..." />
 
-    <!-- Answers -->
-    <div id="answers" class="answers"></div>
-
-    <!-- Button -->
-    <button id="nextBtn" class="next-btn">
-      Next <i class="fa-solid fa-angle-right"></i>
-    </button>
-
-  </div>
-
-</section>
-
-
-
-
-
-
-<section id="result" class="result-page" style="display:none;">
-
-  <div class="result-card fade-in">
-
-    <div class="trophy">🏆</div>
-
-    <h2>Quiz Result 🎯</h2>
-
-    <!-- Stats -->
-    <div class="stats">
-
-      <div class="stat-box">
-        <i class="fa-solid fa-star"></i>
-        <p>Score</p>
-        <h3 id="score"></h3>
       </div>
 
-      <div class="stat-box">
-        <i class="fa-solid fa-check"></i>
-        <p>Accuracy</p>
-        <h3 id="accuracy"></h3>
-      </div>
+      <h1>
+        Play <span>Smart.</span><br />
+        Think <span>Sharp.</span>
+      </h1>
 
-      <div class="stat-box">
-        <i class="fa-solid fa-clock"></i>
-        <p>Total Time</p>
-        <h3 id="timeTaken"></h3>
-      </div>
+      <p>
+        Test your knowledge with modern interactive quizzes,
+        improve your skills, and challenge your brain.
+      </p>
+
+      <button class="start-btn" onclick="startQuiz()">
+        Start Quiz
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
 
     </div>
 
-    <!-- Review -->
-    <div id="review"></div>
-
-    <button class="play-btn" onclick="restartQuiz()">
-      <i class="fa-solid fa-rotate"></i> Play Again
-    </button>
-
-  </div>
-
-</section>
+  </section>
 
 
 
@@ -197,14 +102,358 @@
 
 
 
+  <!-- =========================
+       CATEGORIES
+  ========================== -->
+
+  <section class="categories">
+
+    <div class="section-heading">
+
+      <h2>Choose Category</h2>
+
+      <p>
+        Pick your favorite topic and begin the challenge.
+      </p>
+
+    </div>
+
+    <div class="card-grid">
+
+      <!-- GK -->
+
+      <div class="card" onclick="startQuiz('GK')">
+
+        <div class="circle">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+
+        <h3>General Knowledge</h3>
+
+        <p>
+          Test your world awareness and current knowledge.
+        </p>
+
+      </div>
+
+
+
+      <!-- ENGLISH -->
+
+      <div class="card" onclick="startQuiz('ENGLISH')">
+
+        <div class="circle">
+          <i class="fa-solid fa-language"></i>
+        </div>
+
+        <h3>English</h3>
+
+        <p>
+          Improve grammar, vocabulary and comprehension.
+        </p>
+
+      </div>
+
+
+
+      <!-- MATH -->
+
+      <div class="card" onclick="startQuiz('MATH')">
+
+        <div class="circle">
+          <i class="fa-solid fa-calculator"></i>
+        </div>
+
+        <h3>Mathematics</h3>
+
+        <p>
+          Solve problems and sharpen calculation speed.
+        </p>
+
+      </div>
+
+
+
+      <!-- REASONING -->
+
+      <div class="card" onclick="startQuiz('REASONING')">
+
+        <div class="circle">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+
+        <h3>Reasoning</h3>
+
+        <p>
+          Train your logical thinking and analytical mind.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
 
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 
-<script src="script.js"></script>
+
+
+  <!-- =========================
+       QUIZ SECTION
+  ========================== -->
+
+  <section id="quiz" class="quiz-page" style="display:none;">
+
+    <div class="quiz-card fade-in">
+
+      <!-- TOP -->
+
+      <div class="quiz-top">
+
+        <div class="progress-text">
+
+          <i class="fa-solid fa-layer-group"></i>
+
+          <span id="progress">
+            Question 1/10
+          </span>
+
+        </div>
+
+        <div class="timer-box">
+
+          <i class="fa-solid fa-clock"></i>
+
+          <span id="timer">
+            10
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+
+
+      <!-- PROGRESS -->
+
+      <div class="progress-bar">
+
+        <div id="progressFill"></div>
+
+      </div>
+
+
+
+
+
+
+      <!-- QUESTION -->
+
+      <div class="question-box">
+
+        <div class="question-icon">
+          ❓
+        </div>
+
+        <h2 id="question">
+          Question appears here
+        </h2>
+
+      </div>
+
+
+
+
+
+
+      <!-- ANSWERS -->
+
+      <div id="answers" class="answers"></div>
+
+
+
+
+
+
+      <!-- NEXT BUTTON -->
+
+      <button id="nextBtn" class="next-btn">
+
+        Next Question
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+  <!-- =========================
+       RESULT SECTION
+  ========================== -->
+
+  <section id="result" class="result-page" style="display:none;">
+
+    <div class="result-card fade-in">
+
+      <!-- TOP RESULT -->
+
+      <div class="result-top">
+
+        <div class="result-badge">
+          🏆
+        </div>
+
+        <h2>Quiz Completed</h2>
+
+        <p>
+          Great effort! Here's your performance summary.
+        </p>
+
+      </div>
+
+
+
+
+
+
+      <!-- SCORE CIRCLE -->
+
+      <div class="score-circle">
+
+        <div class="score-inner">
+
+          <span id="score">0/10</span>
+
+          <small>Final Score</small>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+      <!-- STATS -->
+
+      <div class="stats">
+
+        <div class="stat-box">
+
+          <div class="stat-icon">
+            <i class="fa-solid fa-check"></i>
+          </div>
+
+          <div>
+            <p>Accuracy</p>
+            <h3 id="accuracy">0%</h3>
+          </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="stat-box">
+
+          <div class="stat-icon">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+
+          <div>
+            <p>Time Taken</p>
+            <h3 id="timeTaken">0 sec</h3>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+      <!-- REVIEW TITLE -->
+
+      <div class="review-title">
+
+        <i class="fa-solid fa-clipboard-check"></i>
+
+        Answer Review
+
+      </div>
+
+
+
+
+
+
+
+      <!-- REVIEW -->
+
+      <div id="review"></div>
+
+
+
+
+
+
+
+      <!-- ACTION BUTTONS -->
+
+      <div class="result-actions">
+
+        <button class="play-btn" onclick="restartQuiz()">
+
+          <i class="fa-solid fa-rotate"></i>
+
+          Play Again
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+
+  <!-- Confetti -->
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Script -->
+
+  <script src="script.js"></script>
+
 </body>
-</html>
 
+</html>
