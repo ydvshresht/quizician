@@ -32,12 +32,12 @@ let timer;
 let timeLeft = 10;
 
 let startSound = new Audio("assets/sounds/start.mp3");
-let sadSound = new Audio("assets/sounds/sad.mp3");
+
 let wowSound = new Audio("assets/sounds/wow.mp3");
 
 // optional: slightly lower volume
 startSound.volume = 0.2;
-sadSound.volume = 0.7;
+
 wowSound.volume = 0.8;
 // Start Quiz
 
@@ -231,19 +231,13 @@ function showResult() {
     });
   }
   // 🔊 result sound logic
-  if (score === total) {
-    // all correct → wow
-    try {
-      wowSound.currentTime = 0;
-      wowSound.play();
-    } catch (e) {}
-  } else {
-    // any wrong → sad
-    try {
-      sadSound.currentTime = 0;
-      sadSound.play();
-    } catch (e) {}
-  }
+ if (score === total) {
+  // all correct → wow
+  try {
+    wowSound.currentTime = 0;
+    wowSound.play();
+  } catch (e) {}
+}
 }
 
 
