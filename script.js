@@ -42,10 +42,10 @@ wowSound.volume = 0.8;
 // Start Quiz
 
 
-function startQuiz(category = "GK") {
+function startQuiz(CATEGORY = "GK") {
   hideAll();
 
-  quizData = quizzes[category] || [];
+  quizData = quizzes[CATEGORY] || [];
   if (quizData.length === 0) return;
 
   currentQuestion = 0;
@@ -149,12 +149,12 @@ function startTimer() {
 function nextQuestion() {
   clearInterval(timer);
 
-  const correctAns = quizData[currentQuestion].correct;
+  const correctAns = quizData[currentQuestion].CORRECT;
 
   userAnswers.push({
     question: quizData[currentQuestion].question,
     selected: selected || "Not Answered",
-    correct: correctAns
+    CORRECT: correctAns
   });
 
   if (selected === correctAns) {
@@ -332,7 +332,7 @@ document.getElementById("homeBtn").onclick = (e) => {
 
 document.getElementById("quizBtn").onclick = (e) => {
   e.preventDefault();
-  startQuiz("gk");
+  startQuiz("GK");
 };
 
 document.getElementById("catBtn").onclick = (e) => {
