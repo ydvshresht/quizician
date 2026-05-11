@@ -94,17 +94,17 @@ function loadQuestion() {
 
     const letters = ["A", "B", "C", "D"];
 
-    q.options.forEach((option, index) => {
+    q.options.forEach((OPTION, index) => {
       const btn = document.createElement("button");
 
       // ✅ Styled answer (like UI)
       btn.innerHTML = `
         <span class="option-letter">${letters[index]}</span>
-        ${option}
+        ${OPTION}
       `;
 
       btn.onclick = () => {
-        selected = option;
+        selected = OPTION;
 
         document.querySelectorAll(".answers button").forEach(b => {
           b.classList.remove("selected");
@@ -152,7 +152,7 @@ function nextQuestion() {
   const correctAns = quizData[currentQuestion].CORRECT;
 
   userAnswers.push({
-    question: quizData[currentQuestion].question,
+    question: quizData[currentQuestion].QUESTION,
     selected: selected || "Not Answered",
     CORRECT: correctAns
   });
