@@ -356,7 +356,11 @@ body{
 /* =========================
    STATS
 ========================= */
-
+  .trophy{
+      width:320px;
+      text-align:center;
+      font-size:180px;
+    }
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -415,6 +419,223 @@ body{
 .review-text{
   text-align:left;
 }
+   .score-box{
+      background:#fafafa;
+      border-radius:25px;
+      padding:30px;
+      display:flex;
+      align-items:center;
+      gap:40px;
+    }
+
+    .circle-progress{
+      width:130px;
+      height:130px;
+      border-radius:50%;
+      border:10px solid #22c55e;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      color:#22c55e;
+      font-size:35px;
+    }
+
+    .circle-progress span{
+      font-size:15px;
+      color:#6b7280;
+      margin-top:5px;
+    }
+
+    .correct-box h2{
+      font-size:55px;
+      font-weight:800;
+    }
+
+    .correct-box p{
+      margin-top:10px;
+      font-size:20px;
+      color:#16a34a;
+      font-weight:600;
+    }
+
+    /* STATS */
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:25px;
+      margin-bottom:40px;
+    }
+
+    .stat-card{
+      background:#fff;
+      border-radius:25px;
+      padding:30px;
+      display:flex;
+      align-items:center;
+      gap:20px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.04);
+    }
+
+    .icon-box{
+      width:75px;
+      height:75px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:30px;
+      flex-shrink:0;
+    }
+
+    .green{
+      background:#dcfce7;
+      color:#16a34a;
+    }
+
+    .red{
+      background:#fee2e2;
+      color:#dc2626;
+    }
+
+    .purple{
+      background:#ede9fe;
+      color:#7c3aed;
+    }
+
+    .stat-text h2{
+      font-size:42px;
+      font-weight:800;
+    }
+
+    .stat-text p{
+      color:#6b7280;
+      margin-top:5px;
+    }
+
+    /* REVIEW */
+
+    .review-title{
+      font-size:35px;
+      margin-bottom:25px;
+      font-weight:800;
+    }
+
+    .review-box{
+      background:#fff;
+      border-radius:25px;
+      overflow:hidden;
+      box-shadow:0 8px 30px rgba(0,0,0,0.04);
+    }
+
+    .review-item{
+      padding:25px;
+      border-bottom:1px solid #eee;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .review-left{
+      display:flex;
+      align-items:center;
+      gap:20px;
+      flex:1;
+    }
+
+    .review-icon{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:16px;
+      flex-shrink:0;
+    }
+
+    .correct{
+      background:#16a34a;
+    }
+
+    .wrong{
+      background:#dc2626;
+    }
+
+    .review-question{
+      font-weight:600;
+      font-size:17px;
+    }
+
+    .review-answer{
+      font-size:15px;
+      color:#6b7280;
+    }
+
+    .review-answer b{
+      color:#111827;
+    }
+
+    .status{
+      padding:10px 18px;
+      border-radius:30px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    .status.correct{
+      background:#dcfce7;
+      color:#16a34a;
+    }
+
+    .status.wrong{
+      background:#fee2e2;
+      color:#dc2626;
+    }
+
+    /* BUTTONS */
+
+    .bottom-buttons{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin-top:40px;
+      gap:18px;
+    }
+
+    .play-btn{
+      width:100%;
+      max-width:650px;
+      padding:22px;
+      border:none;
+      border-radius:18px;
+      background:linear-gradient(90deg,#5B5CF6,#9333EA);
+      color:#fff;
+      font-size:22px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.3s;
+      box-shadow:0 10px 30px rgba(108,99,255,.25);
+    }
+
+    .play-btn:hover{
+      transform:translateY(-4px);
+    }
+
+    .home-link{
+      text-decoration:none;
+      color:#6C63FF;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:18px;
+    }
 
 /* =========================
    ANIMATION
@@ -488,66 +709,76 @@ body{
    MOBILE
 ========================= */
 
-@media(max-width:480px){
 
-  .logo{
-    font-size:24px;
-  }
+    @media(max-width:900px){
 
-  .hero h1{
-    font-size:30px;
-  }
+      .hero-card{
+        flex-direction:column;
+        text-align:center;
+      }
 
-  .hero p{
-    font-size:14px;
-  }
+      .score-box{
+        flex-direction:column;
+      }
 
-  .input-box{
-    padding:12px 15px;
-  }
+      .stats{
+        grid-template-columns:1fr;
+      }
 
-  .input-box input{
-    font-size:14px;
-  }
+      .review-item{
+        flex-direction:column;
+        align-items:flex-start;
+      }
 
-  .start-btn,
-  .play-btn,
-  .next-btn{
-    width:100%;
-    font-size:15px;
-  }
+    }
 
-  .card{
-    padding:22px;
-  }
+    @media(max-width:600px){
 
-  .question-box h2{
-    font-size:22px;
-  }
+      .navbar{
+        padding:18px 20px;
+        flex-direction:column;
+        gap:20px;
+      }
 
-  .question-icon{
-    font-size:42px;
-  }
+      .nav-links{
+        gap:18px;
+        flex-wrap:wrap;
+        justify-content:center;
+      }
 
-  .answers button{
-    font-size:14px;
-    padding:14px;
-  }
+      .hero-content h1{
+        font-size:35px;
+      }
 
-  .review-card{
-    flex-direction:column;
-  }
+      .hero-content p{
+        font-size:15px;
+      }
 
-  .bg-shape{
-    width:220px;
-    height:220px;
-    filter:blur(90px);
-  }
+      .trophy{
+        font-size:120px;
+        width:100%;
+      }
 
-  .quiz-card,
-  .result-card{
-    padding:18px;
-    border-radius:18px;
-  }
+      .circle-progress{
+        width:110px;
+        height:110px;
+        font-size:28px;
+      }
 
-}
+      .correct-box h2{
+        font-size:40px;
+      }
+
+      .review-title{
+        font-size:28px;
+      }
+
+      .play-btn{
+        font-size:18px;
+        padding:18px;
+      }
+
+    }
+
+
+ 
