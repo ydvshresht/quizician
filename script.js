@@ -42,7 +42,7 @@ wowSound.volume = 0.8;
 // Start Quiz
 
 
-function startQuiz(category = "gk") {
+function startQuiz(category = "GK") {
   hideAll();
 
   quizData = quizzes[category] || [];
